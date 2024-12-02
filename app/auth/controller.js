@@ -34,9 +34,9 @@ const localStrategy = async (email, password, done) => {
       return done(null, userWithoutPassword);
     }
   } catch (err) {
-    done(err, null);
+    return done(err, null);
   }
-  done();
+  return done();
 };
 
 const login = (req, res, next) => {
@@ -91,13 +91,13 @@ const logout = async (req, res, next) => {
 
 const me = (req, res, next) => {
   if (!req.user) {
-    res.json({
+    return res.json({
       err: 1,
       message: "You re not login or expired",
     });
   }
 
-  res.json(req.user);
+  return res.json(req.user);
 };
 
 module.exports = {

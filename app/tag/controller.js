@@ -24,7 +24,7 @@ const update = async (req, res, next) => {
     let payload = req.body;
     let tag = await Tag.findByIdAndUpdate(req.params.id, payload, {
       new: true,
-      runValidator: true,
+      runValidators: true,
     });
     return res.json(tag);
   } catch (err) {

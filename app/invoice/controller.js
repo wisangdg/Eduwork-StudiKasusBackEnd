@@ -4,9 +4,14 @@ const policyFor = require("../../utils/index.js");
 
 const show = async (req, res, next) => {
   try {
+    let { order_id } = req.params;
+    let invoice = await Invoice.findOne({ order: order_id })
+      .populate("order")
+      .populate("user");
+
     let policy = policyFor(req.user);
     let subjectInvoice = subject("Invoice", {
-      ...invoice,
+      ...invoice.toJSON(),
       user_id: invoice.user._id,
     });
     if (!policy.can("read", subjectInvoice)) {
@@ -16,10 +21,6 @@ const show = async (req, res, next) => {
       });
     }
 
-    let { order_id } = req.params;
-    let invoice = await Invoice.findOne({ order: order_id })
-      .populate("order")
-      .populate("user");
     return res.json(invoice);
   } catch (err) {
     return res.json({

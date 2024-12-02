@@ -27,8 +27,8 @@ const invoiceSchema = Schema(
 
     payment_status: {
       type: String,
-      enum: ["waiting payment", "paid"],
-      default: "waiting payment",
+      enum: ["waiting_payment", "paid"],
+      default: "waiting_payment",
     },
 
     user: {

@@ -1,5 +1,5 @@
 const Order = require("../order/model.js");
-const Orderitem = require("../order-item/model.js");
+const OrderItem = require("../order-item/model.js");
 const DeliveryAddress = require("../deliveryAddress/model.js");
 const CartItem = require("../cart-item/model.js");
 const { Types } = require("mongoose");
@@ -29,9 +29,8 @@ const store = async (req, res, next) => {
       user: req.user._id,
     });
 
-    let orderItems = await Orderitem.insertMany(
+    let orderItems = await OrderItem.insertMany(
       items.map((item) => ({
-        ...item,
         name: item.product.name,
         qty: parseInt(item.qty),
         price: parseInt(item.product.price),
@@ -40,7 +39,7 @@ const store = async (req, res, next) => {
       }))
     );
     orderItems.forEach((item) => order.order_items.push(item));
-    order.save();
+    await order.save();
     await CartItem.deleteMany({ user: req.user._id });
     return res.json(order);
   } catch (err) {
@@ -58,7 +57,7 @@ const store = async (req, res, next) => {
 const index = async (req, res, next) => {
   try {
     let { skip = 0, limit = 10 } = req.body;
-    let count = await Order.find().counDocuments();
+    let count = await Order.find().countDocuments();
     let orders = await Order.find({ user: req.user._id })
       .skip(parseInt(skip))
       .limit(parseInt(limit))

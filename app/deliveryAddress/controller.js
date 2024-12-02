@@ -40,8 +40,9 @@ const update = async (req, res, next) => {
     }
     address = await DeliveryAddress.findByIdAndUpdate(id, payload, {
       new: true,
+      runValidators: true,
     });
-    res.json(address);
+    return res.json(address);
   } catch (err) {
     if (err && err.name == "ValidationError") {
       return res.json({
@@ -71,7 +72,7 @@ const destroy = async (req, res, next) => {
     }
 
     address = await DeliveryAddress.findByIdAndDelete(id);
-    res.json(address);
+    return res.json(address);
   } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
@@ -104,6 +105,7 @@ const index = async (req, res, next) => {
         fields: err.errors,
       });
     }
+    next(err);
   }
 };
 

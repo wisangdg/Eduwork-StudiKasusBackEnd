@@ -24,7 +24,7 @@ const update = async (req, res, next) => {
     let payload = req.body;
     let category = await Categories.findByIdAndUpdate(req.params.id, payload, {
       new: true,
-      runValidator: true,
+      runValidators: true,
     });
     return res.json(category);
   } catch (err) {
@@ -59,7 +59,7 @@ const destroy = async (req, res, next) => {
 
 const index = async (req, res, next) => {
   try {
-    let category = await Product.find();
+    let category = await Categories.find();
     return res.json(category);
   } catch (err) {
     next(err);

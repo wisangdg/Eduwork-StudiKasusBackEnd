@@ -15,7 +15,7 @@ function decodeToken() {
       let user = await User.findOne({ token: { $in: [token] } });
 
       if (!user) {
-        res.json({
+        return res.json({
           error: 1,
           message: "Token Expired",
         });
@@ -45,6 +45,7 @@ function police_check(action, subject) {
         message: `You are not allowed to ${action} ${subject}`,
       });
     }
+    next();
   };
 }
 

@@ -8,7 +8,7 @@ const orderSchema = Schema(
     status: {
       type: String,
       enum: ["waiting payment", "processing", "in_delivery", "delivered"],
-      default: ["waiting_payment"],
+      default: "waiting payment",
     },
     delivery_fee: {
       type: Number,
@@ -59,7 +59,7 @@ orderSchema.post("save", async function () {
     delivery_address: this.delivery_address,
   });
 
-  await Invoice.save();
+  await invoice.save();
 });
 
 module.exports = model("Order", orderSchema);

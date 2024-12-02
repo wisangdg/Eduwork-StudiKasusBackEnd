@@ -26,10 +26,12 @@ const productSchema = Schema(
       ref: "Category",
     },
 
-    tags: {
-      type: Schema.Types.ObjectId,
-      ref: "Tag",
-    },
+    tags: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Tag",
+      },
+    ],
   },
   { timestamps: true }
 );

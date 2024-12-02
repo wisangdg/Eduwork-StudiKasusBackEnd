@@ -1,4 +1,4 @@
-const { createMongoAbility } = require("@casl/ability");
+const { createMongoAbility, AbilityBuilder } = require("@casl/ability");
 
 function getToken(req) {
   let token = req.headers.authorization
@@ -33,14 +33,14 @@ const policies = {
 };
 
 const policyFor = (user) => {
-  let builder = new MongoAbility.Builder();
+  const { can, rules } = new AbilityBuilder(createMongoAbility);
   if (user && typeof policies[user.role] === "function") {
-    policies[user.role](user, builder);
+    policies[user.role](user, { can });
   } else {
-    policies["guest"](user, builder);
+    policies["guest"](user, { can });
   }
 
-  return createMongoAbility(builder.rules);
+  return createMongoAbility(rules);
 };
 
 module.exports = { getToken, policyFor };
