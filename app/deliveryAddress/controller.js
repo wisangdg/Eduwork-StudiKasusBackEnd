@@ -1,7 +1,6 @@
 const { subject } = require("@casl/ability");
 const { policyFor } = require("../../utils/index.js");
 const DeliveryAddress = require("./model.js");
-const { parse } = require("dotenv");
 
 const store = async (req, res, next) => {
   try {

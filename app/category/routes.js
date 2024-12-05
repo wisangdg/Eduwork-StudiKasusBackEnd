@@ -1,5 +1,4 @@
 const router = require("express").Router();
-
 const { police_check } = require("../../middlewares/index.js");
 const categoryController = require("./controller.js");
 

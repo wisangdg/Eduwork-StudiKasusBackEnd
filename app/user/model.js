@@ -7,7 +7,7 @@ const userSchema = Schema(
   {
     full_name: {
       type: String,
-      minglength: [3, "Panjang nama makanan minimal 3 karakter"],
+      minlength: [3, "Panjang nama minimal 3 karakter"],
       maxlength: [255, "Panjang nama harus antara 3-255"],
       required: [true, "Nama harus diisi"],
     },
@@ -18,13 +18,13 @@ const userSchema = Schema(
 
     email: {
       type: String,
-      required: [true, "Email haris diisi"],
+      required: [true, "Email harus diisi"],
       maxlength: [255, "Panjang email maksimal 255 karakter"],
     },
 
     password: {
       type: String,
-      required: [true, "Email haris diisi"],
+      required: [true, "Password harus diisi"],
       maxlength: [255, "Panjang password maksimal 255 karakter"],
     },
 
@@ -51,7 +51,7 @@ userSchema.path("email").validate(
   async function (value) {
     try {
       //lakukan pencarian ke _collection_ user berdasarkan 'email'
-      const count = await this.model("User").count({ email: value });
+      const count = await this.model("User").countDocuments({ email: value });
       //jika false maka validasi gagal, jika true maka validasi berhasil
       return !count;
     } catch (err) {

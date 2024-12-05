@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { decodeToken } = require("../../middlewares/index.js");
 const authController = require("./controller.js");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -9,6 +10,6 @@ passport.use(
 router.post("/register", authController.register);
 router.post("/login", authController.login);
 router.post("/logout", authController.logout);
-router.get("/me", authController.me);
+router.get("/me", decodeToken, authController.me);
 
 module.exports = router;

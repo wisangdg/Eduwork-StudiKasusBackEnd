@@ -1,15 +1,25 @@
-const { createMongoAbility, AbilityBuilder } = require("@casl/ability");
+const {
+  createMongoAbility: Ability,
+  AbilityBuilder,
+} = require("@casl/ability");
 
+/**
+ * Mendapatkan token dari request
+ * @param {Object} req - Request object
+ * @returns {String} - Token
+ */
 function getToken(req) {
-  let token = req.headers.authorization
-    ? req.headers.authorization.replace("Bearer ", "").trim()
-    : null;
+  if (!req.headers.authorization) {
+    return null;
+  }
 
-  return token && token.length ? token : null;
+  const token = req.headers.authorization.replace("Bearer ", "").trim();
+  return token && token.length > 0 ? token : null;
 }
 
-//policies
-
+/**
+ * Definisi kebijakan akses untuk setiap role
+ */
 const policies = {
   guest(user, { can }) {
     can("read", "Product");
@@ -32,15 +42,19 @@ const policies = {
   },
 };
 
+/**
+ * Membuat policy berdasarkan user role
+ * @param {Object} user - User object
+ * @returns {Ability} - CASL Ability instance
+ */
 const policyFor = (user) => {
-  const { can, rules } = new AbilityBuilder(createMongoAbility);
-  if (user && typeof policies[user.role] === "function") {
-    policies[user.role](user, { can });
-  } else {
-    policies["guest"](user, { can });
-  }
+  const { can, rules } = new AbilityBuilder(Ability);
 
-  return createMongoAbility(rules);
+  const role = user?.role || "guest";
+  policies[role]?.(user, { can });
+
+  console.log(`User role: ${role}`);
+  return new Ability(rules);
 };
 
 module.exports = { getToken, policyFor };
