@@ -11,13 +11,13 @@ router.post(
 );
 
 router.put(
-  "/categories:id",
+  "/categories/:id",
   police_check("update", "Category"),
   categoryController.update
 );
 
 router.delete(
-  "/categories:id",
+  "/categories/:id",
   police_check("delete", "Category"),
   categoryController.destroy
 );

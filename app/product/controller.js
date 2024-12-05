@@ -39,8 +39,9 @@ const store = async (req, res, next) => {
 
     if (payload.tags && payload.tags.length > 0) {
       let tags = await Tag.find({
-        name: { $in: payload.tags },
+        name: { $in: payload.tags.map((tag) => new RegExp(tag, "i")) },
       });
+      console.log("Tags found:", tags);
       if (tags.length) {
         payload = { ...payload, tags: tags.map((tag) => tag._id) };
       } else {
@@ -248,11 +249,21 @@ const index = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
   try {
-    let product = await Product.findOneAndDelete(req.params.id);
-    let currentImage = `${config.rootPath}/public/images/products/${product_images_url}`;
+    let product = await Product.findByIdAndDelete(req.params.id);
 
-    if (fs.existsSync(currentImage)) {
-      fs.unlinkSync(currentImage);
+    if (!product) {
+      return res.json({
+        error: 1,
+        message: "Produk tidak ditemukan",
+      });
+    }
+
+    // Hapus gambar jika ada
+    if (product.image_url) {
+      let currentImage = `${config.rootPath}/public/images/products/${product.image_url}`;
+      if (fs.existsSync(currentImage)) {
+        fs.unlinkSync(currentImage);
+      }
     }
 
     return res.json(product);
