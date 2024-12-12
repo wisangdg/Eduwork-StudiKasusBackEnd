@@ -2,7 +2,7 @@ const Categories = require("./model.js");
 
 const store = async (req, res, next) => {
   try {
-    console.log("Payload received:", req.body);
+    // console.log("Payload received:", req.body);
     let payload = req.body;
     let category = new Categories(payload);
     await category.save();

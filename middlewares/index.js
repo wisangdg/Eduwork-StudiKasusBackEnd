@@ -7,7 +7,7 @@ const { getToken } = require("../utils/index.js");
 const decodeToken = async (req, res, next) => {
   try {
     const token = getToken(req);
-    console.log("Authorization Header:", token);
+    // console.log("Authorization Header:", token);
     if (!token) return next();
 
     // Verifikasi token
