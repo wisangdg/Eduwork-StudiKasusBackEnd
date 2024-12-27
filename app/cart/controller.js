@@ -70,52 +70,49 @@ const store = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    const items = req.body;
+    const { items } = req.body;
 
     if (!Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: 1, message: "Invalid input" });
     }
 
-    const productIds = items.map((item) => item.product._id);
-    const products = await Product.find({ _id: { $in: productIds } });
+    for (const item of items) {
+      const { product, qty } = item;
 
-    if (products.length !== productIds.length) {
-      return res
-        .status(400)
-        .json({ error: 1, message: "Some products not found" });
+      if (!product || !product._id) {
+        return res
+          .status(400)
+          .json({ error: 1, message: "Product ID is required" });
+      }
+
+      const existingCartItem = await CartItem.findOne({
+        user: req.user._id,
+        product: product._id,
+      });
+
+      if (existingCartItem) {
+        existingCartItem.qty += qty;
+        if (existingCartItem.qty <= 0) {
+          await existingCartItem.remove();
+        } else {
+          await existingCartItem.save();
+        }
+      } else if (qty > 0) {
+        const newCartItem = new CartItem({
+          product: product._id,
+          qty,
+          price: product.price,
+          image_url: product.image_url,
+          user: req.user._id,
+        });
+        await newCartItem.save();
+      }
     }
 
-    let cartItems = items.map((item) => {
-      let relatedProduct = products.find(
-        (product) => product._id.toString() === item.product._id.toString()
-      );
-      return {
-        product: relatedProduct._id,
-        price: relatedProduct.price,
-        image_url: relatedProduct.image_url,
-        name: relatedProduct.name,
-        user: req.user._id,
-        qty: item.qty,
-      };
-    });
-
-    await CartItem.deleteMany({ user: req.user._id });
-    await CartItem.bulkWrite(
-      cartItems.map((item) => {
-        return {
-          updateOne: {
-            filter: {
-              user: req.user._id,
-              product: item.product,
-            },
-            update: item,
-            upsert: true,
-          },
-        };
-      })
-    );
-
-    return res.json(cartItems);
+    const updatedCartItems = await CartItem.find({
+      user: req.user._id,
+    }).populate("product");
+    return res.json(updatedCartItems);
   } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.status(400).json({
@@ -130,10 +127,13 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
   try {
-    let cart = await CartItem.findByIdAndDelete(req.params.id);
+    let cart = await CartItem.findOneAndDelete({
+      user: req.user._id,
+      product: req.params.id,
+    });
 
     if (!cart) {
-      return res.status(404).json({ error: 1, message: "Cart not found" });
+      return res.status(404).json({ error: 1, message: "Cart item not found" });
     }
 
     return res.json(cart);

@@ -20,7 +20,6 @@ const productSchema = Schema(
     },
 
     image_url: String,
-
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",

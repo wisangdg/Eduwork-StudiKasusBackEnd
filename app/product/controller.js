@@ -195,9 +195,9 @@ const update = async (req, res, next) => {
 
 const index = async (req, res, next) => {
   try {
-    let { skip = 0, limit = 10, q = "", category = "", tags = [] } = req.query;
+    let { skip = 0, limit = 12, q = "", category = "", tags = [] } = req.query;
     skip = parseInt(skip) || 0;
-    limit = parseInt(limit) || 10;
+    limit = parseInt(limit) || 12;
     let page = parseInt(req.query.page) || 1;
     console.log("Query page:", page);
 
@@ -213,11 +213,13 @@ const index = async (req, res, next) => {
 
       if (categoryResult) {
         criteria.category = categoryResult._id;
+      } else {
+        // Handle case when category is not found
       }
     }
 
     if (tags.length) {
-      let tagsResult = await Tag.find({ name: { $in: tags } });
+      let tagsResult = await Tag.find({ _id: { $in: tags } }); // Menggunakan _id langsung dari query params
       if (tagsResult.length > 0) {
         criteria.tags = { $in: tagsResult.map((tag) => tag._id) };
       }

@@ -3,7 +3,7 @@ const { model, Schema } = mongoose;
 
 const deliveryAddressSchema = Schema(
   {
-    name: {
+    addressName: {
       type: String,
       maxlength: [255, "Panjang nama alamat maksimal 255 karakter"],
       required: [true, "Nama alamat harus diisi"],
@@ -11,7 +11,7 @@ const deliveryAddressSchema = Schema(
 
     kelurahan: {
       type: String,
-      required: true,
+      required: [true, "Kelurahan harus diisi"],
       maxlength: [255, "Panjang kelurahan maksimal 255 karakter"],
     },
 
@@ -21,16 +21,16 @@ const deliveryAddressSchema = Schema(
       maxlength: [255, "Panjang nama kecamatan maksimal 255 karakter"],
     },
 
-    kabupaten: {
+    kabupatenkota: {
       type: String,
-      required: [true, "Kecamatan harus diisi"],
+      required: [true, "Kabupaten harus diisi"],
       maxlength: [255, "Panjang nama kabupaten maksimal 255 karakter"],
     },
 
     provinsi: {
       type: String,
-      required: [true, "Kecamatan harus diisi"],
-      maxlength: [255, "Panjang nama kabupaten maksimal 255 karakter"],
+      required: [true, "Provinsi harus diisi"],
+      maxlength: [255, "Panjang nama provinsi maksimal 255 karakter"],
     },
 
     detail: {
@@ -42,6 +42,7 @@ const deliveryAddressSchema = Schema(
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: [true, "User harus diisi"],
     },
   },
   { timestamps: true }

@@ -31,6 +31,11 @@ const invoiceSchema = Schema(
       default: "waiting_payment",
     },
 
+    order: {
+      type: Schema.Types.ObjectId,
+      ref: "Order",
+    },
+
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
