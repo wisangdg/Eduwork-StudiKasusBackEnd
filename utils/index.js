@@ -52,9 +52,10 @@ const policyFor = (user) => {
 
   const role = user && user.role ? user.role : "guest";
 
-  policies[role]?.(user, { can });
+  if (policies[role]) {
+    policies[role](user, { can });
+  }
 
-  // console.log(`User role: ${role}`);
   return new Ability(rules);
 };
 
