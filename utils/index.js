@@ -50,7 +50,8 @@ const policies = {
 const policyFor = (user) => {
   const { can, rules } = new AbilityBuilder(Ability);
 
-  const role = user?.role || "guest";
+  const role = user && user.role ? user.role : "guest";
+
   policies[role]?.(user, { can });
 
   // console.log(`User role: ${role}`);
