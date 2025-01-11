@@ -15,10 +15,6 @@ const cartRoute = require("./app/cart/routes.js");
 const orderRoute = require("./app/order/routes.js");
 const invoiceRoute = require("./app/invoice/routes.js");
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "pug");
-
 app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
@@ -38,8 +34,9 @@ app.use("/api", invoiceRoute);
 
 //home
 app.use("/", function (req, res) {
-  res.render("index", {
-    title: "Eduwork API Service",
+  res.json({
+    message: "Eduwork API Service",
+    status: "Running",
   });
 });
 
@@ -50,13 +47,13 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.json({
+    error: {
+      message: err.message,
+      status: err.status || 500,
+    },
+  });
 });
 
 module.exports = app;
