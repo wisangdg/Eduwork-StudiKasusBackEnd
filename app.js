@@ -17,6 +17,15 @@ const invoiceRoute = require("./app/invoice/routes.js");
 
 //testing
 
+const corsOptions = {
+  origin: [
+    "https://eduwork-studi-kasus-front-end.vercel.app",
+    "https://eduwork-studi-kasus-front-2ko5de3pe-wisang-drillians-projects.vercel.app",
+    "http://localhost:3001",
+  ],
+  optionsSuccessStatus: 200,
+};
+
 app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
