@@ -18,7 +18,7 @@ const invoiceRoute = require("./app/invoice/routes.js");
 const corsOptions = {
   origin: process.env.FRONTEND_URL || [
     "http://localhost:3001",
-    "eduwork-studi-kasus-front-end.vercel.app",
+    "http://eduwork-studi-kasus-front-end.vercel.app",
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
