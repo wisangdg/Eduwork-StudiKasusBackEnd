@@ -35,7 +35,6 @@ app.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
 
-  // Intercept OPTIONS method
   if (req.method === "OPTIONS") {
     res.sendStatus(200);
   } else {
