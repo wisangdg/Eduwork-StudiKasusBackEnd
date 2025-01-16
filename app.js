@@ -18,16 +18,26 @@ const invoiceRoute = require("./app/invoice/routes.js");
 app.use(
   cors({
     origin: [
+      "https://eduwork-studi-kasus-front-cnm8vz50m-wisang-drillians-projects.vercel.app",
       "https://eduwork-studi-kasus-front-kqy9aq4w4-wisang-drillians-projects.vercel.app",
       "http://localhost:3000",
       "http://localhost:3001",
     ],
     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"],
+    exposedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
     optionsSuccessStatus: 200,
+    preflightContinue: false,
   })
 );
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header("Access-Control-Allow-Credentials", true);
+  next();
+});
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

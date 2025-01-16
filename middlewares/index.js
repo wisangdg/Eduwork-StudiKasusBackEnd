@@ -6,6 +6,7 @@ const { getToken } = require("../utils/index.js");
 
 const decodeToken = async (req, res, next) => {
   try {
+    console.log("Request headers:", req.headers);
     const token = getToken(req);
     // console.log("Authorization Header:", token);
     if (!token) return next();
@@ -25,6 +26,7 @@ const decodeToken = async (req, res, next) => {
     req.user = user;
     return next();
   } catch (err) {
+    console.error("Token decode error:", err);
     if (err && err.name === "JsonWebTokenError") {
       return res.json({
         error: 1,
