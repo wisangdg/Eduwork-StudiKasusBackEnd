@@ -3,7 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-var app = express();
+
 const cors = require("cors");
 const timeout = require("connect-timeout");
 const { decodeToken } = require("./middlewares");
@@ -15,13 +15,16 @@ const deliveryAddressRoute = require("./app/deliveryAddress/routes.js");
 const cartRoute = require("./app/cart/routes.js");
 const orderRoute = require("./app/order/routes.js");
 const invoiceRoute = require("./app/invoice/routes.js");
+const app = express();
 
-app.use(timeout("30s"));
-app.use(haltOnTimedout);
-function haltOnTimedout(req, res, next) {
-  if (!req.timedout) next();
-}
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -79,26 +82,18 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err, req, res, next) {
-  // Handling timeout errors
+app.use((err, req, res, next) => {
   if (err.timeout) {
     return res.status(504).json({
-      error: {
-        message: "Request timeout",
-        status: 504,
-      },
+      error: "Server timeout",
+      message: "The request took too long to process",
     });
   }
 
-  const status = err.status || 500;
-  const message = err.message || "Internal Server Error";
-
-  res.status(status).json({
-    error: {
-      message: message,
-      status: status,
-      stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
-    },
+  console.error(err.stack);
+  res.status(err.status || 500).json({
+    error: err.message || "Internal Server Error",
+    status: err.status || 500,
   });
 });
 
