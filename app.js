@@ -17,10 +17,15 @@ const invoiceRoute = require("./app/invoice/routes.js");
 
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "https://eduwork-studi-kasus-front-kqy9aq4w4-wisang-drillians-projects.vercel.app",
+      "http://localhost:3000",
+      "http://localhost:3001",
+    ],
     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
+    optionsSuccessStatus: 200,
   })
 );
 app.use(logger("dev"));
