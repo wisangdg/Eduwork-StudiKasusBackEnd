@@ -15,49 +15,31 @@ const cartRoute = require("./app/cart/routes.js");
 const orderRoute = require("./app/order/routes.js");
 const invoiceRoute = require("./app/invoice/routes.js");
 
-app.use(
-  cors({
-    origin: [
-      "https://eduwork-studi-kasus-front-end.vercel.app",
-      "https://eduwork-studi-kasus-front-cnm8vz50m-wisang-drillians-projects.vercel.app",
-      "https://eduwork-studi-kasus-front-kqy9aq4w4-wisang-drillians-projects.vercel.app",
-      "http://localhost:3000",
-      "http://localhost:3001",
-    ],
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Accept",
-      "Origin",
-      "X-Requested-With",
-    ],
-    exposedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-    optionsSuccessStatus: 200,
-  })
-);
+app.use(cors());
 
 app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (origin) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader(
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
     "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+    "GET, PUT, POST, DELETE, OPTIONS, PATCH"
   );
-  res.setHeader(
+  res.header(
     "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Accept, Origin, X-Requested-With"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
 
-  // Handle preflight
+  // Intercept OPTIONS method
   if (req.method === "OPTIONS") {
-    return res.status(200).end();
+    res.sendStatus(200);
+  } else {
+    next();
   }
+});
 
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  console.log("Origin:", req.headers.origin);
+  console.log("Headers:", JSON.stringify(req.headers, null, 2));
   next();
 });
 
