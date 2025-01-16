@@ -19,6 +19,7 @@ app.use(
   cors({
     origin: [
       "https://eduwork-studi-kasus-front-cnm8vz50m-wisang-drillians-projects.vercel.app",
+      "https://eduwork-studi-kasus-front-end.vercel.app/",
       "https://eduwork-studi-kasus-front-kqy9aq4w4-wisang-drillians-projects.vercel.app",
       "http://localhost:3000",
       "http://localhost:3001",
