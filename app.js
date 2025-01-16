@@ -3,9 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-
 const cors = require("cors");
-const timeout = require("connect-timeout");
 const { decodeToken } = require("./middlewares");
 const productRoute = require("./app/product/routes.js");
 const categoryRoute = require("./app/category/routes.js");
