@@ -1,1 +1,18 @@
-{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/" }] }
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "bin/www",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "bin/www"
+    }
+  ],
+  "env": {
+    "PORT": "3000"
+  }
+}
