@@ -15,14 +15,14 @@ const orderRoute = require("./app/order/routes.js");
 const invoiceRoute = require("./app/invoice/routes.js");
 const app = express();
 
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL || "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
-);
+app.use(cors());
+
+// cors({
+//   origin: process.env.FRONTEND_URL || "*",
+//   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+//   credentials: true,
+// })
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
