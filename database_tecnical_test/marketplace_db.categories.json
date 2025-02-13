@@ -1,0 +1,30 @@
+[{
+  "_id": {
+    "$oid": "67ad68202099141579534959"
+  },
+  "ct_id": 1,
+  "ct_code": "C001",
+  "ct_name": "Electronics",
+  "ct_created_at": "2023-01-01T00:00:00Z",
+  "ct_updated_at": "2023-01-01T00:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "67ad6820209914157953495a"
+  },
+  "ct_id": 2,
+  "ct_code": "C002",
+  "ct_name": "Clothing",
+  "ct_created_at": "2023-01-02T00:00:00Z",
+  "ct_updated_at": "2023-01-02T00:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "67ad6820209914157953495b"
+  },
+  "ct_id": 3,
+  "ct_code": "C003",
+  "ct_name": "Books",
+  "ct_created_at": "2023-01-03T00:00:00Z",
+  "ct_updated_at": "2023-01-03T00:00:00Z"
+}]

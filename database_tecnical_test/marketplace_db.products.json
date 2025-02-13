@@ -1,0 +1,36 @@
+[{
+  "_id": {
+    "$oid": "67ad68122099141579534954"
+  },
+  "pd_id": 1,
+  "pd_code": "P001",
+  "pd_ct_id": 1,
+  "pd_name": "Laptop Asus",
+  "pd_price": 10000000,
+  "pd_created_at": "2023-01-01T00:00:00Z",
+  "pd_updated_at": "2023-01-01T00:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "67ad68122099141579534955"
+  },
+  "pd_id": 2,
+  "pd_code": "P002",
+  "pd_ct_id": 2,
+  "pd_name": "Smartphone Samsung",
+  "pd_price": 5000000,
+  "pd_created_at": "2023-01-02T00:00:00Z",
+  "pd_updated_at": "2023-01-02T00:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "67ad68122099141579534956"
+  },
+  "pd_id": 3,
+  "pd_code": "P003",
+  "pd_ct_id": 1,
+  "pd_name": "Laptop HP",
+  "pd_price": 12000000,
+  "pd_created_at": "2023-01-03T00:00:00Z",
+  "pd_updated_at": "2023-01-03T00:00:00Z"
+}]

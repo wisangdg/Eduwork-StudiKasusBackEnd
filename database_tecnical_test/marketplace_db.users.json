@@ -1,0 +1,39 @@
+[{
+  "_id": {
+    "$oid": "67ad67f6209914157953494f"
+  },
+  "us_id": 1,
+  "us_name": "Eko Saputro",
+  "us_password": "password123",
+  "us_email": "ekosaputro@gmail.com",
+  "us_phone_number": "08123456789",
+  "us_address": "Jakarta, Indonesia",
+  "us_created_at": "2025-01-01T00:00:00Z",
+  "us_updated_at": "2025-01-01T00:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "67ad67f62099141579534950"
+  },
+  "us_id": 2,
+  "us_name": "Danang Wijaya",
+  "us_password": "password456",
+  "us_email": "danangwijaya@gmail.com",
+  "us_phone_number": "08987654321",
+  "us_address": "Bandung, Indonesia",
+  "us_created_at": "2025-01-02T00:00:00Z",
+  "us_updated_at": "2025-01-02T00:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "67ad67f62099141579534951"
+  },
+  "us_id": 3,
+  "us_name": "Ari Wibowo",
+  "us_password": "airwibow0",
+  "us_email": "ariwibow0@gmail.com",
+  "us_phone_number": "08555555555",
+  "us_address": "Surabaya, Indonesia",
+  "us_created_at": "2025-01-03T00:00:00Z",
+  "us_updated_at": "2025-01-03T00:00:00Z"
+}]
